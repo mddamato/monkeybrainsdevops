@@ -9,12 +9,15 @@ If you get stuck anywhere message me on Slack @mdamato
 ### Downloading OC Tools
 We need the OS Client Tools to be able to interact with the remote openshift. From a "developer" machine (gradle, docker, oc tools, git) we will first need to download the tools package and add to path or reference it for `oc` commands.  
 Skip this part if you already have openshift tools installed.  
-I included this package in the repository:
+I included this package in the repository for Linux users:
+
 ```
 cd amq-spring-demo #Wherever you downloaded the repo
 tar -xvf openshift-origin-client-tools-v1.3.3-bc17c1527938fa03b719e1a117d584442e3727b8-linux-64bit.tar.gz
 ```
 Then add the binaries to your path.
+
+* For other platforms, download the CLI tools from the [Origin project](https://github.com/openshift/origin/releases)
 
 ### Log into OpenShift from CLI
 You should see a success message as well as a message indicating to create a new project. Use the `$USERNAME` and `$PASSWORD` given to you.
