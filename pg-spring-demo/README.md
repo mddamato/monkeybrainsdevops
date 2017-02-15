@@ -14,7 +14,7 @@ This is currently included in the repository for Linux users:
 
 ```
 cd amq-spring-demo #Wherever you downloaded the repo
-tar -xvf openshift-origin-client-tools-v1.3.3-bc17c1527938fa03b719e1a117d584442e3727b8-linux-64bit.tar.gz
+tar -xvf openshift-origin-client-tools-v1.4.1-3f9807a-linux-64bit.tar.gz
 * Version subject to check
 ```
 Then add the binaries to your PATH (e.g. bash_profile).
