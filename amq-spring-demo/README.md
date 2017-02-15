@@ -1,4 +1,4 @@
-Active-MQ with Spring in OpenShift Walkthrough
+Active-MQ with Spring in Openshift Walkthrough
 ==============================================
 
 Note: It is recommended to check out the [Openshift](https://github.com/mongoos2006/monkeybrainsdevops/wiki/Lesson-Openshift) lesson first before proceeding.
