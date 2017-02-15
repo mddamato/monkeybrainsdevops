@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot + Postgres Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" />
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Spring Boot Postgres Example</h1>
+        <p class="lead">Demo application for showing how to run a <a href="http://projects.spring.io/spring-boot/">Spring Boot</a> application with Postgres DB.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-lg-6">
+            <form th:object="${insertRecord}" method="POST">
+                <div class="form-group">
+                    <label for="name">Enter Name</label>
+                    <input id="name" type="text" class="form-control" placeholder="Enter Name" th:field="*{name}" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Enter Email</label>
+                    <input id="email" type="text" class="form-control" placeholder="Enter Email" th:field="*{email}" />
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Records</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="record : ${records}">
+                        <td th:text="${record.name}">Some text</td>
+                         <td th:text="${record.email}">Some text</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

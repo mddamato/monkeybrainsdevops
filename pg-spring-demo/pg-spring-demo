@@ -1,0 +1,106 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: pg-spring-demo
+  annotations:
+    description: Spring Boot Application Template
+labels:
+  template: pg-spring-template
+parameters:
+
+- description: The name for the application.
+  name: APPLICATION_NAME
+  value: pg-spring-demo
+  required: true
+
+- description: subdomain.
+  name: SUB_DOMAIN_NAME
+  value: pg-spring-demo
+  required: true
+
+- description: domain name
+  name: DOMAIN_NAME
+  value: michaeldd.net
+  required: true
+
+- description: Docker image tag
+  name: DOCKER_IMAGE_TAG
+  value: latest
+  required: true
+
+- description: Docker image tag
+  name: NEXUS_DOCKER
+  value: 10.103.137.89:4443
+  required: true
+
+objects:
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-serv"
+  spec:
+    ports:
+    - name: tomcat-port
+      port: 8080
+      targetPort: 8080
+    selector:
+      name: "${APPLICATION_NAME}-dep-config"
+
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-dep-config"
+  spec:
+    strategy:
+      type: Rolling
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "${APPLICATION_NAME}"
+        from:
+          kind: ImageStreamTag
+          name: "${APPLICATION_NAME}-i-stream:latest"
+    replicas: 1
+    selector:
+      name: "${APPLICATION_NAME}-dep-config"
+    template:
+      metadata:
+        labels:
+          name: "${APPLICATION_NAME}-dep-config"
+      spec:
+        containers:
+        - name: "${APPLICATION_NAME}"
+          image: "${APPLICATION_NAME}-i-stream"
+          ports:
+          - containerPort: 8080
+          env:
+          - name: SERVER_PORT
+            value: "8080"
+
+
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-i-stream"
+  spec:
+      dockerImageRepository: "${NEXUS_DOCKER}/${APPLICATION_NAME}"
+      tags:
+        - from:
+            kind: DockerImage
+            name: "${NEXUS_DOCKER}/${APPLICATION_NAME}:${DOCKER_IMAGE_TAG}"
+          importPolicy:
+              insecure: true
+          name: latest
+- kind: Route
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-route"
+  spec:
+    host: "${SUB_DOMAIN_NAME}.${DOMAIN_NAME}"
+    to:
+      kind: Service
+      name: "${APPLICATION_NAME}-serv"

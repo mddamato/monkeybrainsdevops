@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        //mavenCentral()
+        //jCenter()
+        maven {
+          credentials {
+            username nexusUN
+            password nexusPW
+          }
+          url (nexusURL)
+        }
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE')
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'docker'
+
+group = 'sample'
+
+jar {
+    baseName = 'pg-spring-demo'
+    version =  '0.1.0'
+}
+
+
+task buildDocker(type: Docker, dependsOn: build) {
+  push = false
+  applicationName = jar.baseName
+  dockerfile = file('docker/Dockerfile')
+  doFirst {
+    copy {
+      from jar
+      into stageDir
+    }
+  }
+}
+
+repositories {
+    //mavenCentral()
+    //jCenter()
+    maven {
+      credentials {
+        username nexusUN
+        password nexusPW
+      }
+      url (nexusURL)
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    runtime("org.postgresql:postgresql")
+    runtime("com.h2database:h2")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
