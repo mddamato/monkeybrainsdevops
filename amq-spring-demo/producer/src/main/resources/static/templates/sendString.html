@@ -1,0 +1,26 @@
+<div xmlns="http://www.w3.org/1999/html">
+    <h3 class="text-center">Send Object</h3>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Send object:</div>
+        <div class="panel-body">
+            <form role="form">
+                <div class="form-group">
+
+                    <label for="intput1">String</label>
+                    <input type="text"
+                           class="form-control" id="intput1" placeholder="String"
+                           required ng-model="inputForm.input1">
+
+                    <label for="intput2">String</label>
+                    <input type="text"
+                           class="form-control" id="intput2" placeholder="String"
+                           required ng-model="inputForm.input2">
+
+                </div>
+                <a class="btn btn-default" id="sendButton" ng-click="sendInputForm()">Send</a>
+            </form>
+        </div>
+    </div>
+
+</div>

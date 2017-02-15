@@ -1,0 +1,9 @@
+producer/.gradle/
+producer/target/
+producer/build/
+producer/.idea/
+producer/.idea/
+consumer/.gradle/
+consumer/target/
+consumer/build/
+consumer/.idea/

@@ -1,0 +1,15 @@
+div.aetasLogo {
+   content:url(images/aetasLogo.png);
+   height: 300px;
+   width: 300px;
+   display: block;
+   margin: auto;
+}​
+
+div.aetasLogoSmall {
+   content:url(images/aetasLogo.png);
+   height: 20px;
+   width: 20px;
+   display: block;
+   margin: auto;
+}​

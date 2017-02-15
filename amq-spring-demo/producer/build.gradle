@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        //mavenCentral()
+        maven {
+          credentials {
+            username nexusUN
+            password nexusPW
+          }
+          url (nexusURL)
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE")
+        classpath('se.transmode.gradle:gradle-docker:1.2')
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+jar {
+    baseName = 'messaging-jms'
+    version =  '0.1.0'
+}
+
+repositories {
+    //mavenCentral()
+    //jCenter()
+    maven {
+      credentials {
+        username nexusUN
+        password nexusPW
+      }
+      url (nexusURL)
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    compile.exclude module: 'spring-boot-starter-logging'
+}
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.data:spring-data-commons")
+
+    compile("com.lmax:disruptor:3.3.4")
+    compile("org.springframework.boot:spring-boot-starter-tomcat:1.4.3.RELEASE")
+    compile("org.apache.tomcat.embed:tomcat-embed-jasper:9.0.0.M15")
+    compile("javax.servlet:jstl")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile("org.springframework:spring-jms")
+    compile("org.apache.activemq:activemq-client")
+    compile("org.apache.activemq:activemq-spring")
+    compile("com.google.guava:guava:19.0")
+    compile("com.alibaba:fastjson:1.2.12")
+    compile("org.apache.commons:commons-lang3:3.2.1")
+compile("org.springframework.boot:spring-boot-starter-log4j2")
+}

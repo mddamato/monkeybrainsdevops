@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="off">
+    <Properties>
+        <Property name="fileName">/tmp/logs</Property>
+        <Property name="fileGz">/tmp/logs/7z</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} %L %M - %msg%xEx%n"/>
+        </Console>
+        <RollingRandomAccessFile name="rollingInfoFile" fileName="${fileName}/springboot-info.log"
+                                 immediateFlush="false"
+                                 filePattern="${fileGz}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.springboot-info.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} [%t] %-5level %logger{36} %L %M - %msg%xEx%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="rollingErrorFile" fileName="${fileName}springboot-error.log"
+                                 immediateFlush="false"
+                                 filePattern="${fileGz}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.springboot-error.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} [%t] %-5level %logger{36} %L %M - %msg%xEx%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <DefaultRolloverStrategy max="50"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <AsyncRoot level="info" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="rollingInfoFile"/>
+            <AppenderRef ref="rollingErrorFile"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>
