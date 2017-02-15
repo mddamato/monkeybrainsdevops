@@ -1,21 +1,21 @@
 Active-MQ with Spring in OpenShift Walkthrough
 ==============================================
 
-This is a demonstration of deploying 3 resources into openshift an Active-MQ consumer, producer, and an Active-MQ broker.  
+This is a demonstration of deploying 3 resources into Openshift: a Java Active-MQ consumer and producer, and an Active-MQ broker.  
 We will use the broker container that is already inside the registry but we will build the consumer and producer.
-You will need sudo access to your machine if you need to install the certificates for gss-nexus.  
-If you get stuck anywhere message me on Slack @mdamato
+You will need sudo access to your machine if you need to install the certificates when using a secured Docker registry.  
 
 ### Downloading OC Tools
-We need the OS Client Tools to be able to interact with the remote openshift. From a "developer" machine (gradle, docker, oc tools, git) we will first need to download the tools package and add to path or reference it for `oc` commands.  
+We need the Openshift client tools to be able to interact with the remote Openshift cluster. From your local machine we will first need to download the tools package and add it to your PATH or reference it for `oc` commands.  
 Skip this part if you already have openshift tools installed.  
-I included this package in the repository for Linux users:
+This is currently included in the repository for Linux users:
 
 ```
 cd amq-spring-demo #Wherever you downloaded the repo
 tar -xvf openshift-origin-client-tools-v1.3.3-bc17c1527938fa03b719e1a117d584442e3727b8-linux-64bit.tar.gz
+* Version subject to check
 ```
-Then add the binaries to your path.
+Then add the binaries to your PATH (e.g. bash_profile).
 
 * For other platforms, download the CLI tools from the [Origin project](https://github.com/openshift/origin/releases)
 
